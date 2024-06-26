@@ -16,9 +16,9 @@ const Header: React.FC<HeaderProps> = ({ setOpen }) => {
   type Nav = NavItem[]
 
   const navList: Nav = [
-    { name: 'Home', path: '#', current: true },
+    { name: 'Home', path: '#', current: false },
     { name: 'About', path: '#about', current: false },
-    { name: 'Blog', path: '#blog', current: false }
+    { name: 'Blog', path: '#blog', current: true }
   ]
 
   const [mobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false)
@@ -73,7 +73,7 @@ const Header: React.FC<HeaderProps> = ({ setOpen }) => {
               <a
                 key={'nav-' + item.name}
                 href={item.path}
-                className={`${item.current && 'text-gray-500'} text-sm font-semibold leading-6 text-gray-900 hover:text-gray-500`}
+                className={`${item.current ? 'text-gray-500' : 'text-gray-900'} text-sm font-semibold leading-6 hover:text-gray-500`}
                 onClick={() => activeNavItem(item)}
               >
                 {item.name}

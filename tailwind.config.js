@@ -5,6 +5,17 @@ module.exports = {
     extend: {
       minWidth: {
         custom: '600px'
+      },
+      colors: {
+        primary: '#6d28d9'
+      },
+      height: {
+        blogItem: '260px',
+        blogTitle: '64px',
+        blogShortContent: '144px'
+      },
+      width: {
+        blogItem: '248px'
       }
     }
   },
