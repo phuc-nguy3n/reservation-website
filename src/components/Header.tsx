@@ -1,8 +1,12 @@
-import { useState } from 'react'
+import { useState, Dispatch, SetStateAction } from 'react'
 import { Dialog, DialogPanel, PopoverGroup } from '@headlessui/react'
 import { XMarkIcon, Bars3Icon } from '@heroicons/react/24/outline'
 
-export default function Header() {
+type HeaderProps = {
+  setOpen: Dispatch<SetStateAction<boolean>>
+}
+
+const Header: React.FC<HeaderProps> = ({ setOpen }) => {
   type NavItem = {
     name: string
     path: string
@@ -49,6 +53,12 @@ export default function Header() {
 
           <div className='flex lg:hidden'>
             <button
+              onClick={() => setOpen(true)}
+              className='me-2 rounded-full bg-violet-700 px-3 py-1 font-bold text-white hover:bg-violet-500'
+            >
+              +
+            </button>
+            <button
               type='button'
               className='-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700'
               onClick={() => setMobileMenuOpen(true)}
@@ -58,7 +68,7 @@ export default function Header() {
             </button>
           </div>
 
-          <PopoverGroup className='hidden lg:flex lg:gap-x-12'>
+          <PopoverGroup className='hidden items-center lg:flex lg:gap-x-12'>
             {navItems.map((item) => (
               <a
                 key={'nav-' + item.name}
@@ -69,6 +79,12 @@ export default function Header() {
                 {item.name}
               </a>
             ))}
+            <button
+              onClick={() => setOpen(true)}
+              className='rounded-full bg-violet-700 px-3 py-1 font-bold text-white hover:bg-violet-500'
+            >
+              +
+            </button>
           </PopoverGroup>
         </nav>
 
@@ -106,3 +122,5 @@ export default function Header() {
     </>
   )
 }
+
+export default Header
