@@ -21,10 +21,10 @@ const BlogItem: React.FC<BlogItemProps> = ({ blog, index }) => {
         <img className='h-full w-full rounded object-cover' src={blog.img} alt='' />
       </div>
       <div className='w-3/5'>
-        <h2 className='mb-2 h-blogTitle overflow-hidden text-ellipsis text-2xl font-bold tracking-tight text-gray-900 dark:text-white'>
+        <h2 className='max-h-blogTitle mb-2 overflow-hidden text-ellipsis text-2xl font-bold tracking-tight text-gray-900 dark:text-white'>
           {blog.title}
         </h2>
-        <p className='h-blogShortContent w-blogItem overflow-hidden text-ellipsis font-light text-gray-500 dark:text-gray-400'>
+        <p className='max-w-blogItem h-blogShortContent overflow-hidden text-ellipsis font-light text-gray-500 dark:text-gray-400'>
           {blog.description}
         </p>
       </div>

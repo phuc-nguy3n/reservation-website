@@ -1,16 +1,19 @@
 import { useEffect, useState } from 'react'
 import BlogItem from './BlogItem'
+import FormData from './FormData'
 
-type BlogItem = {
+type BlogType = {
   title: string
   img: string
   description: string
 }
 
-type Blogs = BlogItem[]
+type ModalType = boolean
+
+type BlogItems = BlogType[]
 
 const Blogs = () => {
-  const blogsInit: Blogs = [
+  const blogsInit: BlogItems = [
     {
       title: 'How to quickly deploy a static website',
       img: 'https://images.unsplash.com/photo-1531804055935-76f44d7c3621?q=80&w=1888&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
@@ -19,7 +22,8 @@ const Blogs = () => {
     }
   ]
 
-  const [blogList, setBlogList] = useState<Blogs>([])
+  const [blogList, setBlogList] = useState<BlogItems>([])
+  const [isOpenModal, setIsOpenModal] = useState<ModalType>(false)
 
   useEffect(() => {
     fetchBlogData()
@@ -39,6 +43,23 @@ const Blogs = () => {
               Blog is a form for you to share your knowledge, experience and experiences.
             </p>
           </div>
+          <div className='mb-5 flex justify-end'>
+            <button
+              onClick={() => setIsOpenModal(true)}
+              className='rounded-full bg-violet-700 px-3 py-2.5 font-bold text-white hover:bg-violet-500'
+            >
+              <svg
+                xmlns='http://www.w3.org/2000/svg'
+                fill='none'
+                viewBox='0 0 24 24'
+                stroke-width='1.5'
+                stroke='currentColor'
+                className='size-6'
+              >
+                <path stroke-linecap='round' stroke-linejoin='round' d='M12 4.5v15m7.5-7.5h-15' />
+              </svg>
+            </button>
+          </div>
           <div className='grid gap-8 lg:grid-cols-2'>
             {blogList.map((blog, index) => (
               <BlogItem blog={blog} index={index} />
@@ -46,6 +67,8 @@ const Blogs = () => {
           </div>
         </div>
       </section>
+
+      {isOpenModal && <FormData open={isOpenModal} setOpen={setIsOpenModal} />}
     </>
   )
 }
