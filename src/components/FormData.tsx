@@ -17,8 +17,8 @@ const FormData: React.FC<FormDataProps> = ({ open, setOpen }) => {
 
         <div className='fixed inset-0 z-10 w-screen overflow-y-auto'>
           <div className='flex min-h-full items-center justify-center p-4 text-center sm:p-0'>
-            <div className='lg:min-w-custom rounded bg-white p-6'>
-              <h2 className='text-2xl font-semibold leading-7 text-gray-900'>Add New Blog</h2>
+            <div className='rounded bg-white p-6 lg:min-w-custom'>
+              <h2 className='text-2xl font-bold leading-7 text-gray-900'>Add New Blog</h2>
               <p className='mt-2 text-sm leading-6 text-gray-600'>Add new articles to your experience</p>
 
               <div className='mt-10 grid grid-cols-1 gap-6 sm:grid-cols-6'>
