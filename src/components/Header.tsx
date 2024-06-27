@@ -6,15 +6,15 @@ type HeaderProps = {
   setOpen: Dispatch<SetStateAction<boolean>>
 }
 
+type NavItem = {
+  name: string
+  path: string
+  current?: boolean
+}
+
+type Nav = NavItem[]
+
 const Header: React.FC<HeaderProps> = ({ setOpen }) => {
-  type NavItem = {
-    name: string
-    path: string
-    current?: boolean
-  }
-
-  type Nav = NavItem[]
-
   const navList: Nav = [
     { name: 'Home', path: '#', current: false },
     { name: 'About', path: '#about', current: false },

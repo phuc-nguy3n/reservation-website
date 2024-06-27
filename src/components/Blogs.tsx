@@ -1,15 +1,15 @@
 import { useEffect, useState } from 'react'
 import BlogItem from './BlogItem'
 
+type BlogItem = {
+  title: string
+  img: string
+  description: string
+}
+
+type Blogs = BlogItem[]
+
 const Blogs = () => {
-  type BlogItem = {
-    title: string
-    img: string
-    description: string
-  }
-
-  type Blogs = BlogItem[]
-
   const blogsInit: Blogs = [
     {
       title: 'How to quickly deploy a static website',
