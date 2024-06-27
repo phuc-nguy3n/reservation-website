@@ -14,8 +14,11 @@ module.exports = {
         blogTitle: '64px',
         blogShortContent: '144px'
       },
-      width: {
+      maxWidthwidth: {
         blogItem: '248px'
+      },
+      maxHeight: {
+        blogTitle: '64px'
       }
     }
   },
