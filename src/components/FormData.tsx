@@ -1,12 +1,39 @@
 import { Dialog, DialogBackdrop } from '@headlessui/react'
-import { Dispatch, SetStateAction } from 'react'
+import { Dispatch, SetStateAction, useState } from 'react'
+import { BlogType, BlogItems } from './Blogs'
 
 type FormDataProps = {
   open: boolean
+  blogList: BlogItems
   setOpen: Dispatch<SetStateAction<boolean>>
+  setBlogList: Dispatch<React.SetStateAction<BlogItems>>
 }
 
-const FormData: React.FC<FormDataProps> = ({ open, setOpen }) => {
+const FormData: React.FC<FormDataProps> = ({ open, blogList, setOpen, setBlogList }) => {
+  const dataInit: BlogType = {
+    title: '',
+    img: '',
+    description: ''
+  }
+
+  const [blogData, setBlogData] = useState<BlogType>(dataInit)
+
+  const handleOnChange = (e: { target: { name: string; value: string } }) => {
+    const { name, value } = e.target
+
+    setBlogData({
+      ...blogData,
+      [name]: value
+    })
+  }
+
+  const hanlePostBlog = () => {
+    if (blogData.title && blogData.img && blogData.description) {
+      setBlogList([blogData, ...blogList])
+      setOpen(false)
+    }
+  }
+
   return (
     <>
       <Dialog className='relative z-10' open={open} onClose={setOpen}>
@@ -23,14 +50,15 @@ const FormData: React.FC<FormDataProps> = ({ open, setOpen }) => {
 
               <div className='mt-10 grid grid-cols-1 gap-6 sm:grid-cols-6'>
                 <div className='col-span-full'>
-                  <label htmlFor='title-blog' className='block text-start text-sm font-medium leading-6 text-gray-900'>
+                  <label htmlFor='title' className='block text-start text-sm font-medium leading-6 text-gray-900'>
                     Title
                   </label>
                   <div className='mt-2'>
                     <input
+                      onChange={handleOnChange}
                       type='text'
-                      name='title-blog'
-                      id='title-blog'
+                      name='title'
+                      id='title'
                       autoComplete='given-name'
                       className='block w-full rounded-md border-0 px-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
                       placeholder='Title here...'
@@ -39,17 +67,15 @@ const FormData: React.FC<FormDataProps> = ({ open, setOpen }) => {
                 </div>
 
                 <div className='col-span-full'>
-                  <label
-                    htmlFor='featured-img-blog'
-                    className='block text-start text-sm font-medium leading-6 text-gray-900'
-                  >
+                  <label htmlFor='img' className='block text-start text-sm font-medium leading-6 text-gray-900'>
                     Featured Image
                   </label>
                   <div className='mt-2'>
                     <input
+                      onChange={handleOnChange}
                       type='text'
-                      name='featured-img-blog'
-                      id='featured-img-blog'
+                      name='img'
+                      id='img'
                       autoComplete='given-name'
                       className='block w-full rounded-md border-0 px-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
                       placeholder=' Featured Image here...'
@@ -58,16 +84,14 @@ const FormData: React.FC<FormDataProps> = ({ open, setOpen }) => {
                 </div>
 
                 <div className='col-span-full'>
-                  <label
-                    htmlFor='description-blog'
-                    className='block text-start text-sm font-medium leading-6 text-gray-900'
-                  >
+                  <label htmlFor='description' className='block text-start text-sm font-medium leading-6 text-gray-900'>
                     Description
                   </label>
                   <div className='mt-2'>
                     <textarea
-                      id='description-blog'
-                      name='description-blog'
+                      onChange={handleOnChange}
+                      id='description'
+                      name='description'
                       rows={3}
                       className='block w-full rounded-md border-0 px-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
                       defaultValue={''}
@@ -77,7 +101,12 @@ const FormData: React.FC<FormDataProps> = ({ open, setOpen }) => {
                 </div>
               </div>
               <div className='mt-6 flex justify-end gap-x-2'>
-                <button className='rounded bg-blue-500 px-6 py-2 font-bold text-white hover:bg-blue-700'>Post</button>
+                <button
+                  onClick={() => hanlePostBlog()}
+                  className='rounded bg-blue-500 px-6 py-2 font-bold text-white hover:bg-blue-700'
+                >
+                  Post
+                </button>
                 <button
                   onClick={() => {
                     setOpen(false)
