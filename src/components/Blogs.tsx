@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import BlogItem from './BlogItem'
 import FormData from './FormData'
 
-type BlogType = {
+export type BlogType = {
   title: string
   img: string
   description: string
@@ -10,7 +10,7 @@ type BlogType = {
 
 type ModalType = boolean
 
-type BlogItems = BlogType[]
+export type BlogItems = BlogType[]
 
 const Blogs = () => {
   const blogsInit: BlogItems = [
@@ -68,7 +68,9 @@ const Blogs = () => {
         </div>
       </section>
 
-      {isOpenModal && <FormData open={isOpenModal} setOpen={setIsOpenModal} />}
+      {isOpenModal && (
+        <FormData open={isOpenModal} setOpen={setIsOpenModal} blogList={blogList} setBlogList={setBlogList} />
+      )}
     </>
   )
 }
