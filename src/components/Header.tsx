@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Dialog, DialogPanel, PopoverGroup } from '@headlessui/react'
 import { XMarkIcon, Bars3Icon } from '@heroicons/react/24/outline'
 import { Link } from 'react-router-dom'
@@ -19,7 +19,23 @@ const Header = () => {
   ]
 
   const [mobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false)
-  const [navItems, setNavItems] = useState<Nav>(navList)
+  const [navItems, setNavItems] = useState<Nav>(() => {
+    const navStorage = localStorage.getItem('navItems')
+    if (navStorage) {
+      try {
+        const parsedNavItems = JSON.parse(navStorage) as Nav
+        return parsedNavItems
+      } catch (error) {
+        console.error('Failed to parse nav items from localStorage', error)
+        return []
+      }
+    }
+    return navList
+  })
+
+  useEffect(() => {
+    localStorage.setItem('navItems', JSON.stringify(navItems))
+  }, [])
 
   const activeNavItem = (item: NavItem) => {
     const updatedNavItems = navItems.map((navItem) => {
@@ -31,6 +47,7 @@ const Header = () => {
     })
 
     setNavItems(updatedNavItems)
+    localStorage.setItem('navItems', JSON.stringify(updatedNavItems))
   }
 
   return (
