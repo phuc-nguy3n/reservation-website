@@ -1,8 +1,9 @@
 import { Dialog, DialogBackdrop } from '@headlessui/react'
 import { Dispatch, SetStateAction, useState } from 'react'
-import { BlogType, BlogItems } from './Blogs'
+import { BlogType } from './Blogs'
 import { useAppDispatch } from '../hooks/hooks'
 import { addBlog } from '../redux/blogSlice'
+import { v4 as uuidv4 } from 'uuid'
 
 type FormDataProps = {
   open: boolean
@@ -11,6 +12,7 @@ type FormDataProps = {
 
 const FormData: React.FC<FormDataProps> = ({ open, setOpen }) => {
   const dataInit: BlogType = {
+    id: '',
     title: '',
     img: '',
     description: ''
@@ -44,7 +46,12 @@ const FormData: React.FC<FormDataProps> = ({ open, setOpen }) => {
   }
 
   const hanlePostBlog = () => {
-    if (blogData.title && blogData.img && blogData.description) {
+    const updatedBlogData: BlogType = {
+      ...blogData,
+      id: uuidv4()
+    }
+    setBlogData(updatedBlogData)
+    if (blogData.id && blogData.title && blogData.img && blogData.description) {
       setOpen(false)
       dispatch(addBlog(blogData))
     }
