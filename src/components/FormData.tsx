@@ -6,12 +6,10 @@ import { addBlog } from '../redux/blogSlice'
 
 type FormDataProps = {
   open: boolean
-  blogList: BlogItems
   setOpen: Dispatch<SetStateAction<boolean>>
-  setBlogList: Dispatch<React.SetStateAction<BlogItems>>
 }
 
-const FormData: React.FC<FormDataProps> = ({ open, blogList, setOpen, setBlogList }) => {
+const FormData: React.FC<FormDataProps> = ({ open, setOpen }) => {
   const dataInit: BlogType = {
     title: '',
     img: '',
@@ -47,7 +45,6 @@ const FormData: React.FC<FormDataProps> = ({ open, blogList, setOpen, setBlogLis
 
   const hanlePostBlog = () => {
     if (blogData.title && blogData.img && blogData.description) {
-      setBlogList([blogData, ...blogList])
       setOpen(false)
       dispatch(addBlog(blogData))
     }
