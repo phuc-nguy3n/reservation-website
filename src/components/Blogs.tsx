@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import BlogItem from './BlogItem'
 import FormData from './FormData'
+import { useAppSelector } from '../hooks/hooks'
 
 export type BlogType = {
   title: string
@@ -13,25 +14,9 @@ type ModalType = boolean
 export type BlogItems = BlogType[]
 
 const Blogs = () => {
-  const blogsInit: BlogItems = [
-    {
-      title: 'How to quickly deploy a static website',
-      img: 'https://images.unsplash.com/photo-1531804055935-76f44d7c3621?q=80&w=1888&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-      description:
-        'Static websites are now used to bootstrap lots of websites and are becoming the basis for a variety of tools that even influence both web designers and developers influence both web designers and developers.'
-    }
-  ]
+  const blogList = useAppSelector((state) => state.blogList)
 
-  const [blogList, setBlogList] = useState<BlogItems>([])
   const [isOpenModal, setIsOpenModal] = useState<ModalType>(false)
-
-  useEffect(() => {
-    fetchBlogData()
-  }, [])
-
-  const fetchBlogData = () => {
-    setBlogList([...blogsInit])
-  }
 
   return (
     <>
@@ -68,9 +53,7 @@ const Blogs = () => {
         </div>
       </section>
 
-      {isOpenModal && (
-        <FormData open={isOpenModal} setOpen={setIsOpenModal} blogList={blogList} setBlogList={setBlogList} />
-      )}
+      {isOpenModal && <FormData open={isOpenModal} setOpen={setIsOpenModal} />}
     </>
   )
 }
