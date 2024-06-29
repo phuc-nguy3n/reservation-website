@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Dialog, DialogPanel, PopoverGroup } from '@headlessui/react'
 import { XMarkIcon, Bars3Icon } from '@heroicons/react/24/outline'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate, To, NavigateOptions } from 'react-router-dom'
 
 type NavItem = {
   name: string
@@ -17,6 +17,8 @@ const Header = () => {
     { name: 'About', path: '/about', current: false },
     { name: 'Blog', path: '/blog', current: false }
   ]
+
+  const navigate: (to: To, options?: NavigateOptions) => void = useNavigate()
 
   const [mobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false)
   const [navItems, setNavItems] = useState<Nav>(() => {
@@ -35,6 +37,10 @@ const Header = () => {
 
   useEffect(() => {
     localStorage.setItem('navItems', JSON.stringify(navItems))
+    const navActive: NavItem | undefined = navItems.find((item) => item.current === true)
+    if (navActive) {
+      navigate(navActive.path)
+    }
   }, [])
 
   const activeNavItem = (item: NavItem) => {
