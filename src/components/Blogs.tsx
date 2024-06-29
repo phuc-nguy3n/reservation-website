@@ -4,6 +4,7 @@ import FormData from './FormData'
 import { useAppSelector } from '../hooks/hooks'
 
 export type BlogType = {
+  id: string
   title: string
   img: string
   description: string
