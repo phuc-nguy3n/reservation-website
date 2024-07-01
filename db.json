@@ -1,0 +1,22 @@
+{
+  "blogs": [
+    {
+      "id": "1",
+      "title": "Title",
+      "img": "Img",
+      "description": "There description"
+    },
+    {
+      "id": "2",
+      "title": "Title",
+      "img": "Img",
+      "description": "There description"
+    },
+    {
+      "id": "3",
+      "title": "Title",
+      "img": "Img",
+      "description": "There description"
+    }
+  ]
+}
