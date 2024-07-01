@@ -1,5 +1,5 @@
 import { Dialog, DialogBackdrop } from '@headlessui/react'
-import { Dispatch, SetStateAction, useState } from 'react'
+import { Dispatch, SetStateAction, useState, useRef, useEffect } from 'react'
 import { BlogType } from './Blogs'
 import { useAppDispatch } from '../hooks/hooks'
 import { addBlog } from '../redux/blogSlice'
@@ -10,6 +10,12 @@ type FormDataProps = {
   setOpen: Dispatch<SetStateAction<boolean>>
 }
 
+type InputField = {
+  id: string
+  label: string
+  placeHolder: string
+}
+
 const FormData: React.FC<FormDataProps> = ({ open, setOpen }) => {
   const dataInit: BlogType = {
     id: '',
@@ -18,7 +24,7 @@ const FormData: React.FC<FormDataProps> = ({ open, setOpen }) => {
     description: ''
   }
 
-  const inputFiels = [
+  const inputFiels: InputField[] = [
     {
       id: 'title',
       label: 'Title',
@@ -34,7 +40,15 @@ const FormData: React.FC<FormDataProps> = ({ open, setOpen }) => {
 
   const dispatch = useAppDispatch()
 
+  const inputRefs = useRef<(HTMLInputElement | null)[]>([])
+
   const [blogData, setBlogData] = useState<BlogType>(dataInit)
+
+  useEffect(() => {
+    if (inputRefs.current[0]) {
+      inputRefs.current[0]?.focus()
+    }
+  }, [])
 
   const handleOnChange = (e: { target: { name: string; value: string } }) => {
     const { name, value } = e.target
@@ -72,13 +86,14 @@ const FormData: React.FC<FormDataProps> = ({ open, setOpen }) => {
               <p className='mt-2 text-sm leading-6 text-gray-600'>Add new articles to your experience</p>
 
               <div className='mt-10 grid grid-cols-1 gap-6 sm:grid-cols-6'>
-                {inputFiels.map((item) => (
+                {inputFiels.map((item, index) => (
                   <div className='col-span-full'>
                     <label htmlFor={item.id} className='block text-start text-sm font-medium leading-6 text-gray-900'>
                       {item.label}
                     </label>
                     <div className='mt-2'>
                       <input
+                        ref={(el) => (inputRefs.current[index] = el)}
                         onChange={handleOnChange}
                         type='text'
                         name={item.id}
