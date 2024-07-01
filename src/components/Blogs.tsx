@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import BlogItem from './BlogItem'
 import FormData from './FormData'
 import { useAppSelector } from '../hooks/hooks'
@@ -14,10 +14,21 @@ type ModalType = boolean
 
 export type BlogItems = BlogType[]
 
+export const dataInit: BlogType = {
+  id: '',
+  title: '',
+  img: '',
+  description: ''
+}
+
 const Blogs = () => {
   const blogList = useAppSelector((state) => state.blogList)
 
   const [isOpenModal, setIsOpenModal] = useState<ModalType>(false)
+
+  const [blogData, setBlogData] = useState<BlogType>(dataInit)
+
+  console.log(blogData)
 
   return (
     <>
@@ -54,7 +65,9 @@ const Blogs = () => {
         </div>
       </section>
 
-      {isOpenModal && <FormData open={isOpenModal} setOpen={setIsOpenModal} />}
+      {isOpenModal && (
+        <FormData open={isOpenModal} setOpen={setIsOpenModal} blogData={blogData} setBlogData={setBlogData} />
+      )}
     </>
   )
 }
