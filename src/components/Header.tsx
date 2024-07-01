@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { Dialog, DialogPanel, PopoverGroup } from '@headlessui/react'
 import { XMarkIcon, Bars3Icon } from '@heroicons/react/24/outline'
-import { Link, useNavigate, To, NavigateOptions, useLocation } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 
 type NavItem = {
   name: string
