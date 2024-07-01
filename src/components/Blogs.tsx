@@ -28,8 +28,6 @@ const Blogs = () => {
 
   const [blogData, setBlogData] = useState<BlogType>(dataInit)
 
-  console.log(blogData)
-
   return (
     <>
       <section className='bg-white'>
