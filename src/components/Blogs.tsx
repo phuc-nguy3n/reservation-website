@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react'
 import BlogItem from './BlogItem'
 import FormData from './FormData'
-import { useAppSelector } from '../hooks/hooks'
-// import { init } from '../redux/blogSlice'
+import { useAppDispatch, useAppSelector } from '../hooks/hooks'
+import blogApi from '../api/blogAPI'
+import { init } from '../redux/blogSlice'
 
 export type BlogType = {
   id: string
@@ -24,24 +25,26 @@ export const dataInit: BlogType = {
 
 const Blogs = () => {
   const blogList = useAppSelector((state) => state.blogList)
-  // const dispatch = useAppDispatch()
+  const dispatch = useAppDispatch()
 
   const [isOpenModal, setIsOpenModal] = useState<ModalType>(false)
 
   const [blogData, setBlogData] = useState<BlogType>(dataInit)
 
   useEffect(() => {
-    const res = fetch('http://localhost:3000/blogs')
-      .then(function (response) {
-        return response.json()
-      })
-      .then(function (blogs) {
-        console.log(blogs)
-      })
-
-    console.log(1)
-    // dispatch(init([{ id: '212', title: 'string', img: 'string', description: 'string' }]))
+    fecthBlogList()
   }, [])
+
+  const fecthBlogList = async () => {
+    try {
+      const res = await blogApi.getAll()
+      if (res) {
+        dispatch(init(res))
+      }
+    } catch (err) {
+      console.log(err)
+    }
+  }
 
   return (
     <>
