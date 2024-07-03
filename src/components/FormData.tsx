@@ -4,6 +4,7 @@ import { BlogType, dataInit } from './Blogs'
 import { useAppDispatch } from '../hooks/hooks'
 import { addBlog } from '../redux/blogSlice'
 import { v4 as uuidv4 } from 'uuid'
+import blogApi from 'api/blogAPI'
 
 type FormDataProps = {
   open: boolean
@@ -52,15 +53,19 @@ const FormData: React.FC<FormDataProps> = ({ open, blogData, setOpen, setBlogDat
     })
   }
 
-  const hanlePostBlog = () => {
+  const hanlePostBlog = async () => {
     const updatedBlogData: BlogType = {
       ...blogData,
       id: uuidv4()
     }
-    setBlogData(dataInit)
-    if (blogData.id && blogData.title && blogData.img && blogData.description) {
-      setOpen(false)
-      dispatch(addBlog(updatedBlogData))
+
+    if (updatedBlogData.id && updatedBlogData.title && updatedBlogData.img && updatedBlogData.description) {
+      const res = await blogApi.addNew(updatedBlogData)
+      if (res) {
+        setOpen(false)
+        dispatch(addBlog(updatedBlogData))
+        setBlogData(dataInit)
+      }
     }
   }
 
