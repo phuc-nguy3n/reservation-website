@@ -8,7 +8,7 @@ const blogSlice = createSlice({
   initialState,
 
   reducers: {
-    init: (state, action: PayloadAction<BlogType[]>) => {
+    init: (state, action: PayloadAction<any>) => {
       return action.payload
     },
     addBlog: (state, action: PayloadAction<BlogType>) => {
