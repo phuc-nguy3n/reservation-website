@@ -34,6 +34,8 @@ const Blogs = () => {
 
   const [loadingBlogs, setLoadingBlogs] = useState<boolean>(false)
 
+  const [imageLoaded, setImageLoaded] = useState<boolean[]>([])
+
   useEffect(() => {
     fecthBlogList()
   }, [])
@@ -87,7 +89,7 @@ const Blogs = () => {
           ) : (
             <div className='grid gap-8 lg:grid-cols-2'>
               {blogList.map((blog, index) => (
-                <BlogItem blog={blog} index={index} />
+                <BlogItem blog={blog} index={index} imageLoaded={imageLoaded} setImageLoaded={setImageLoaded} />
               ))}
             </div>
           )}
