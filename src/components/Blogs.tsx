@@ -4,6 +4,7 @@ import FormData from './FormData'
 import { useAppDispatch, useAppSelector } from '../hooks/hooks'
 import blogApi from '../api/blogAPI'
 import { init } from '../redux/blogSlice'
+import LoadItem from './LoadItem'
 
 export type BlogType = {
   id: string
@@ -31,15 +32,19 @@ const Blogs = () => {
 
   const [blogData, setBlogData] = useState<BlogType>(dataInit)
 
+  const [loadingBlogs, setLoadingBlogs] = useState<boolean>(false)
+
   useEffect(() => {
     fecthBlogList()
   }, [])
 
   const fecthBlogList = async () => {
     try {
+      setLoadingBlogs(true)
       const res = await blogApi.getAll()
       if (res) {
         dispatch(init(res))
+        setLoadingBlogs(false)
       }
     } catch (err) {
       console.log(err)
@@ -56,6 +61,7 @@ const Blogs = () => {
               Blog is a form for you to share your knowledge, experience and experiences.
             </p>
           </div>
+
           <div className='mb-5 flex justify-end'>
             <button
               onClick={() => setIsOpenModal(true)}
@@ -73,11 +79,18 @@ const Blogs = () => {
               </svg>
             </button>
           </div>
-          <div className='grid gap-8 lg:grid-cols-2'>
-            {blogList.map((blog, index) => (
-              <BlogItem blog={blog} index={index} />
-            ))}
-          </div>
+
+          {loadingBlogs ? (
+            <div className='flex justify-center'>
+              <LoadItem />
+            </div>
+          ) : (
+            <div className='grid gap-8 lg:grid-cols-2'>
+              {blogList.map((blog, index) => (
+                <BlogItem blog={blog} index={index} />
+              ))}
+            </div>
+          )}
         </div>
       </section>
 
