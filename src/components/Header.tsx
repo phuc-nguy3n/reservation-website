@@ -38,7 +38,6 @@ const Header = () => {
             <Link
               onClick={() => {
                 setNavItems(navList)
-                localStorage.setItem('navItems', JSON.stringify(navList))
               }}
               to='/'
               className='-m-1.5 p-1.5'
