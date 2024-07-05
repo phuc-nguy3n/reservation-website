@@ -9,6 +9,11 @@ const blogApi = {
   addNew: (params) => {
     const url = 'blogs'
     return axiosClient.post(url, params)
+  },
+
+  getDetail: (params) => {
+    const url = `blogs/${params}`
+    return axiosClient.get(url)
   }
 }
 
